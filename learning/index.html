@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mandarin to English Game</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .game-container {
+        width: 100%;
+        max-width: 1000px;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+      .game-title {
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .score {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .question-section {
+        text-align: center;
+        margin-top: 60px;
+      }
+      .question {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+      .options {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .option {
+        flex: 1 1 calc(50% - 10px);
+        margin: 10px;
+        padding: 20px;
+        font-size: 1.2rem;
+        text-align: center;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #fff;
+        transition: background-color 0.3s;
+      }
+      .option.red {
+        background-color: #d9534f;
+      }
+      .option.blue {
+        background-color: #0275d8;
+      }
+      .option.yellow {
+        background-color: #f0ad4e;
+      }
+      .option.green {
+        background-color: #5cb85c;
+      }
+      .option:hover {
+        opacity: 0.8;
+      }
+      .back-button {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        font-size: 1.2rem;
+        color: #007bff;
+        background-color: #f8f9fa;
+        border: 1px solid #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .back-button:hover {
+        background-color: #007bff;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="game-title">Mandarin to English Game</div>
+      <div id="score" class="score">Score: 0</div>
+      <div class="question-section">
+        <p id="question" class="question">Question will appear here</p>
+      </div>
+      <div class="options">
+        <div id="option1" class="option red" onclick="checkAnswer(this)">
+          Option 1
+        </div>
+        <div id="option2" class="option blue" onclick="checkAnswer(this)">
+          Option 2
+        </div>
+        <div id="option3" class="option yellow" onclick="checkAnswer(this)">
+          Option 3
+        </div>
+        <div id="option4" class="option green" onclick="checkAnswer(this)">
+          Option 4
+        </div>
+      </div>
+      <a href="menu.html" class="back-button">Back to Menu</a>
+    </div>
+
+    <script>
+      let score = 0;
+      let currentQuestion = {};
+
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+
+      async function fetchQuestions() {
+        const response = await fetch("http://localhost:3000/questions");
+        const data = await response.json();
+        return data;
+      }
+
+      async function generateQuestion() {
+        const data = await fetchQuestions();
+        const questionIndex = getRandomInt(data.length);
+        currentQuestion = data[questionIndex];
+        document.getElementById("question").innerText = currentQuestion.chinese;
+
+        let options = [currentQuestion.english];
+        while (options.length < 4) {
+          const option = data[getRandomInt(data.length)].english;
+          if (!options.includes(option)) {
+            options.push(option);
+          }
+        }
+
+        options = options.sort(() => Math.random() - 0.5);
+
+        document.getElementById("option1").innerText = options[0];
+        document.getElementById("option2").innerText = options[1];
+        document.getElementById("option3").innerText = options[2];
+        document.getElementById("option4").innerText = options[3];
+      }
+
+      function checkAnswer(selectedOption) {
+        if (selectedOption.innerText === currentQuestion.english) {
+          score++;
+          document.getElementById("score").innerText = `Score: ${score}`;
+          alert("Correct! Your score: " + score);
+        } else {
+          alert("Wrong! The correct answer is: " + currentQuestion.english);
+        }
+        generateQuestion();
+      }
+
+      window.onload = () => {
+        document.getElementById("score").innerText = `Score: ${score}`;
+        generateQuestion();
+      };
+    </script>
+  </body>
+</html>

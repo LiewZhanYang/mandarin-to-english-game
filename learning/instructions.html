@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Instructions</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .instructions-container {
+        text-align: center;
+        background: #ffffff;
+        padding: 50px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .instructions-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+      .instructions-text {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+      }
+      .back-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .back-button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="instructions-container">
+      <div class="instructions-title">Game Instructions</div>
+      <div class="instructions-text">
+        Welcome to the Mandarin to English game! Here are the instructions:
+        <ul style="text-align: left; margin-top: 20px">
+          <li>Click "Start Game" to begin.</li>
+          <li>A Mandarin phrase will be displayed at the top.</li>
+          <li>
+            Select the correct English translation from the options provided.
+          </li>
+          <li>If you select the correct answer, your score will increase.</li>
+          <li>Try to get as many correct answers as possible!</li>
+          <li>Click "Back to Menu" to return to the main menu at any time.</li>
+        </ul>
+      </div>
+      <a href="menu.html" class="back-button">Back to Menu</a>
+    </div>
+  </body>
+</html>
